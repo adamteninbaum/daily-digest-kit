@@ -10,7 +10,8 @@ few targeted searches) and, if you want, the newsletters already in your Gmail.
 
 ## Get started (about 10 minutes)
 1. You need a paid Claude plan that includes Claude Code and Routines.
-2. Open the intake form (your friend will send you the link), answer the questions, and
+2. Open the intake form (https://claude.ai/artifact/TQZW7vQwws8rkmU7nkgCHi, once it is
+   shared with you), answer the questions, and
    copy the setup message it gives you.
 3. Go to claude.ai/code, start a new session, paste the message, and let Claude set
    everything up. It will tell you if you need to flip any settings (usually: turn on
