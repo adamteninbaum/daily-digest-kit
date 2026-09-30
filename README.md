@@ -16,6 +16,10 @@ type `/daily-digest:setup`. Claude asks a few questions, builds your page and da
 schedule, and makes your first brief. Later, `/daily-digest:update-profile` changes
 topics, length, time and so on.
 
+Each digest is **pinned** to the kit version reviewed at setup. Changes pushed here later
+never run for anyone until they ask `/daily-digest:update-profile` to move to the newer
+version, which shows them what changed first.
+
 To try the plugin before it is in a marketplace:
 `/plugin marketplace add adamteninbaum/daily-digest-kit`, then
 `/plugin install daily-digest@daily-digest-kit`.

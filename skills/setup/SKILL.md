@@ -10,8 +10,9 @@ Artifact page, plus a daily Routine that writes a new audio brief onto that page
 steps in order. Ask questions only in steps 1 and 3.
 
 KIT = `https://github.com/adamteninbaum/daily-digest-kit` (public; git clone needs no
-login). The daily Routine clones KIT and follows its `RUNBOOK.md`, so setup and daily runs
-always use the same code.
+login). The daily Routine clones KIT and follows its `RUNBOOK.md`, **pinned to the exact
+commit you review during setup** (KIT_SHA). Later changes to KIT never run for this
+person unless they choose to update (`/daily-digest:update-profile`).
 
 ## 1. Get their profile
 If the message already has a profile JSON (pasted from the intake form), use it as is and
@@ -49,6 +50,13 @@ Clone KIT into your scratchpad directory (or the working directory if you have n
 scratchpad): `git clone KIT <dir>/daily-digest-kit`. Work from that folder. The
 Artifact tool publishes only files under the working or scratchpad directory.
 
+Pin it: KIT_SHA = the full output of `git -C <dir>/daily-digest-kit rev-parse HEAD`.
+Then review that version: read `RUNBOOK.md`, `site/index.html` and every script the
+runbook runs (`discover.py`, `resolve_links.py`, `build_digest.py`, `tts.py`,
+`notify.py`, `dropbox_upload.py`) in full. If anything does more than the runbook says
+(sends data anywhere other than the news, voice and ntfy services it names, or touches
+their mail beyond reading newsletters), stop and tell them what you found.
+
 ## 3. Confirm once, then check the network
 Tell them in a few lines what you are about to create, and wait for a yes:
 - A private page, "<name>'s Daily Digest", with its own small database (their profile
@@ -56,7 +64,8 @@ Tell them in a few lines what you are about to create, and wait for a yes:
   connector, `fire_trigger`, so its "New brief now" button can start their Routine.
 - A daily Routine at <time> <timezone_label> that clones KIT and follows its
   `RUNBOOK.md`, runs on their own Claude usage, and sends a push notification when done.
-  Whatever is on KIT's main branch at run time is what runs.
+  It is pinned to the version you just reviewed (give the first 7 characters of
+  KIT_SHA): later changes to KIT never run unless they update.
 - If they picked Gmail or Outlook newsletters: the Routine reads newsletters in that
   mailbox (read only). For Outlook it skips internal and personal mail and uses only
   newsletters from outside senders.
@@ -99,8 +108,11 @@ Use `create_trigger` (Claude Code Remote tools; load with ToolSearch if deferred
 
 ```
 You are making <name>'s daily audio news brief. Do every step; do not ask questions.
-Clone https://github.com/adamteninbaum/daily-digest-kit (public; git clone needs no login)
-and follow its RUNBOOK.md exactly.
+Clone https://github.com/adamteninbaum/daily-digest-kit (public; git clone needs no login),
+then run `git checkout <KIT_SHA>` in it, and follow that version's RUNBOOK.md exactly.
+Use only that pinned version, even if a newer one exists. If the checkout fails, do not
+use any other version: stop and finish with "Daily digest failed: pinned kit version
+<KIT_SHA> not found".
 PAGE_URL = <PAGE_URL>
 Backup copy of the profile (the live one is saved on the page as config/profile):
 <profile JSON>
@@ -108,7 +120,7 @@ Backup copy of the profile (the live one is saved on the page as config/profile)
 Keep the trigger id it returns.
 
 ## 6. Save the profile on the page
-Add `page_url` and `trigger_id` to the profile, then `ArtifactData` action `set`,
+Add `page_url`, `trigger_id` and `kit_version` (= KIT_SHA) to the profile, then `ArtifactData` action `set`,
 `url` = PAGE_URL, `collection` = `config`, `doc_id` = `profile`, `data` = the profile.
 (Load ArtifactData with ToolSearch if deferred.)
 
@@ -127,4 +139,6 @@ Add `page_url` and `trigger_id` to the profile, then `ArtifactData` action `set`
   "Less like this" to teach it, "New brief now" for an extra one (allow the permission
   the first time), and "All briefs" for past days.
 - For a phone icon: open the page in Safari, Share, Add to Home Screen.
-- To change anything later: `/daily-digest:update-profile`.
+- It is pinned to kit version <first 7 characters of KIT_SHA>.
+- To change anything later, or to move to a newer kit version:
+  `/daily-digest:update-profile`.

@@ -1,6 +1,6 @@
 ---
 name: update-profile
-description: Change an existing Daily Digest, such as its topics, interests, sources, length, voice, tone, delivery time or time zone. Use when someone asks to update, change or tweak their daily digest or news brief, or pastes a new setup message with "Update my Daily Digest profile".
+description: Change an existing Daily Digest, or move it to a newer kit version. Covers its topics, interests, sources, length, voice, tone, delivery time or time zone. Use when someone asks to update, change or tweak their daily digest or news brief, or pastes a new setup message with "Update my Daily Digest profile".
 ---
 
 # Update a Daily Digest profile
@@ -18,6 +18,16 @@ The person already has a Daily Digest page and a daily Routine (made by
   "<name>'s Daily Digest").
 
 ## 2. Work out the change
+- Keep the pinned kit version: `kit_version` in the profile, or the commit after
+  `git checkout` in the Routine's current prompt (`get_trigger`). If there is neither
+  (set up before pinning existed), treat it as an update to the latest kit (below).
+- **Updating the kit** (only when they ask for a newer version, or there is no pin):
+  clone `https://github.com/adamteninbaum/daily-digest-kit`, NEW_SHA = `git rev-parse
+  HEAD`. If they had a pin, show `git log --oneline <old>..<NEW_SHA>` and
+  `git diff --stat <old> <NEW_SHA>`. Review the new version exactly as step 2 of
+  `/daily-digest:setup` does, tell them in plain words what changes, and wait for a yes.
+  Then `kit_version` = NEW_SHA. Changes to `site/index.html` reach their page on the next
+  brief.
 - If they pasted a new profile JSON, use it, keeping the saved `page_url` and `trigger_id`.
 - Otherwise apply what they asked to the saved profile. Ask only if the request is
   unclear. Show the fields you will change, old and new, in a short list.
@@ -27,7 +37,7 @@ The person already has a Daily Digest page and a daily Routine (made by
   from step 1, `data` = the new profile.
 - `update_trigger` on `trigger_id`:
   - `prompt`: the same prompt `/daily-digest:setup` writes (step 5 of its SKILL.md), with
-    the new profile JSON as the backup copy.
+    `kit_version` as KIT_SHA and the new profile JSON as the backup copy.
   - `cron_expression`, only if `time` or `timezone` changed:
     `CRON_TZ=<timezone> <MM> <HH> * * *`, HH:MM being 8 minutes before `time`.
 - If they turned on Gmail (`sources.newsletters`) or Outlook (`sources.outlook`)
@@ -36,5 +46,5 @@ The person already has a Daily Digest page and a daily Routine (made by
   already has it. `update_trigger` cannot change a Routine's connectors.
 
 ## 4. Tell them
-One or two lines: what changed, and that the next brief (at <time> <timezone_label>, or
+One or two lines: what changed, the kit version it is pinned to (7 characters), and that the next brief (at <time> <timezone_label>, or
 "New brief now" on the page) uses it. Votes and past briefs are kept.
