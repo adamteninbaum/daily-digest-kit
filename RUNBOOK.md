@@ -29,17 +29,40 @@ from the profile you read in step 1.
   document has `vote` ("up"/"down") and the item's `text`, `source`, `urls`, `wildcard`,
   `date`. Newer votes count more. Never repeat an item they voted on.
 
-## 2. Newsletters (only if `sources.newsletters` is true)
+## 2. Newsletters (only if `sources.newsletters` or `sources.outlook` is true)
+Do 2a, 2b or both, then 2c.
+
+### 2a. Gmail (only if `sources.newsletters` is true)
 - Needs the Gmail connector on this Routine. If Gmail tools are missing, skip this step
-  and put "Newsletters skipped: Gmail isn't connected to this Routine" in the footer.
+  and put "Gmail skipped: Gmail isn't connected to this Routine" in the footer.
 - If `sources.newsletter_senders` lists addresses, search
   `from:(a@x.com OR b@y.com) after:<window start YYYY/MM/DD>`.
   Otherwise find newsletters automatically: search
   `after:<window start YYYY/MM/DD> unsubscribe -in:sent -in:chats -category:social`,
   skim the results (MINIMAL format) and keep the ones that are clearly editorial
   newsletters (not receipts, shipping, promos, security alerts or personal mail).
+- Read kept issues with PLAIN_TEXT.
+
+### 2b. Outlook (only if `sources.outlook` is true)
+- Needs the Microsoft 365 connector on this Routine (tools named like
+  `outlook_email_search` and `read_resource`). If they are missing, skip this step and
+  put "Outlook skipped: Microsoft 365 isn't connected to this Routine" in the footer.
+- This is often a work mailbox. Use ONLY editorial newsletters from outside senders:
+  skip anything from their own organization's domain (the domain of their own address; the connector's `get_me` tool gives it),
+  and anything addressed to them personally, internal, confidential, or about work
+  they are doing. Never mention, quote or summarize such mail anywhere.
+- If `sources.newsletter_senders` lists addresses, run `outlook_email_search` once per
+  sender with `sender` = the address and `afterDateTime` = window start (ISO), `limit` 25.
+  Otherwise find newsletters automatically: `outlook_email_search` with
+  `query` = "unsubscribe", `afterDateTime` = window start, `limit` 25; follow `nextOffset`
+  (as `offset`) for up to 4 pages. Do not pass `folderName` or `order`. Keep the ones that
+  are clearly editorial newsletters (not receipts, shipping, promos, security alerts,
+  calendar or personal mail).
+- Read kept issues with `read_resource` on each email's `mail:///messages/...` URI.
+
+### 2c. For all newsletters
 - Drop anything older than the exact window start. Dedupe by subject line.
-- Read EVERY kept issue in full with PLAIN_TEXT; no sampling. Ignore sponsor blocks, job
+- Read EVERY kept issue in full; no sampling. Ignore sponsor blocks, job
   boards, referral and unsubscribe links.
 
 ## 3. Web discovery (only if `sources.web` is true, which is the default)

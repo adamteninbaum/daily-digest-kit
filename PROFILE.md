@@ -13,6 +13,7 @@ and copied into their Routine prompt as a backup. The intake form writes this fo
   "sources": {
     "web": true,
     "newsletters": true,
+    "outlook": false,
     "newsletter_senders": ["dan@tldrnewsletter.com"]
   },
   "items": 6,
@@ -31,7 +32,10 @@ and copied into their Routine prompt as a backup. The intake form writes this fo
 }
 ```
 
-- `newsletter_senders` empty means "find my newsletters automatically".
+- `newsletters`: read newsletters from Gmail. `outlook`: read newsletters from Outlook
+  (Microsoft 365). Either, both or neither; missing means false.
+- `newsletter_senders` (used for both Gmail and Outlook) empty means "find my
+  newsletters automatically".
 - `time` is when the brief should be ready; the Routine starts about 8 minutes earlier.
 - `voice` is any Edge TTS voice name.
 - `alerts.ntfy_topic`: optional; a long random name for the free ntfy app.
