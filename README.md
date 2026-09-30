@@ -21,7 +21,7 @@ To try the plugin before it is in a marketplace:
 `/plugin install daily-digest@daily-digest-kit`.
 
 **Without the plugin:**
-1. Open the intake form (https://claude.ai/artifact/TQZW7vQwws8rkmU7nkgCHi, once it is
+1. Open the intake form (https://claude.ai/artifact/VHoQtYU45bG1FYuxHHZihs, once it is
    shared with you), answer the questions, and
    copy the setup message it gives you.
 2. Go to claude.ai/code, start a new session, paste the message, and let Claude set
