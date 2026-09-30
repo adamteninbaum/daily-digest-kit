@@ -28,7 +28,8 @@ and copied into their Routine prompt as a backup. The intake form writes this fo
   "dropbox": false,
 
   "page_url": "(filled in by setup)",
-  "trigger_id": "(filled in by setup)"
+  "trigger_id": "(filled in by setup)",
+  "kit_version": "(filled in by setup: the kit commit this digest is pinned to)"
 }
 ```
 

@@ -1,6 +1,8 @@
 # Daily Digest: run runbook
 
-Each person's daily Routine clones this repo and follows this file step by step. Everything
+Each person's daily Routine clones this repo, checks out the commit it was pinned to at
+setup (so it only ever runs a version the person reviewed), and follows this file step
+by step. Everything
 personal (name, topics, sources, number of items, voice, time zone) comes from the
 **profile** saved on that person's own digest page, so this file is the same for everyone.
 

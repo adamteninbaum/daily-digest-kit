@@ -1,6 +1,6 @@
 {
   "name": "daily-digest",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Your own daily audio news brief: a private page with a 1 to 3 minute spoken brief, transcript, direct links and votes that teach it your taste. Run /daily-digest:setup to get yours.",
   "author": { "name": "Adam Teninbaum" },
   "repository": "https://github.com/adamteninbaum/daily-digest-kit",
