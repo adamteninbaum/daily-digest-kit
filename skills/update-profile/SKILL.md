@@ -30,8 +30,10 @@ The person already has a Daily Digest page and a daily Routine (made by
     the new profile JSON as the backup copy.
   - `cron_expression`, only if `time` or `timezone` changed:
     `CRON_TZ=<timezone> <MM> <HH> * * *`, HH:MM being 8 minutes before `time`.
-- If they turned on newsletters, tell them to attach Gmail to the Routine in claude.ai
-  (Claude Code, Routines, their digest Routine, Connectors) unless it already has it.
+- If they turned on Gmail (`sources.newsletters`) or Outlook (`sources.outlook`)
+  newsletters, tell them to attach that connector (Gmail or Microsoft 365) to the Routine
+  in claude.ai (Claude Code, Routines, their digest Routine, Connectors) unless it
+  already has it. `update_trigger` cannot change a Routine's connectors.
 
 ## 4. Tell them
 One or two lines: what changed, and that the next brief (at <time> <timezone_label>, or

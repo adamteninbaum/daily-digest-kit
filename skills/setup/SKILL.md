@@ -29,8 +29,10 @@ Then use `AskUserQuestion` for the rest, in one call:
   gadgets, Business & markets, Startups, Personal finance, US politics, World news,
   Science, Space, Health & fitness, Climate, Sports, Film & TV, Music, Gaming, Design &
   creative, Food & cooking, Travel, Books, Local news.
-- Sources: "The web" (Google News, Hacker News, Techmeme; recommended), "The web and
-  my Gmail newsletters".
+- Sources (multiSelect): "The web" (Google News, Hacker News, Techmeme; recommended),
+  "Gmail newsletters", "Outlook newsletters" (Outlook or work email; only outside
+  newsletters are read, never internal mail). `sources.web`, `sources.newsletters`
+  (Gmail) and `sources.outlook` follow their picks; at least one.
 - Length: "About 2 minutes, 6 stories (Recommended)", "About 1 minute, 4 stories",
   "About 3 minutes, 8 stories".
 - Ready by: "7:30am", "8:00am", "9:00am" (they can type another time). Time zone: use
@@ -38,7 +40,7 @@ Then use `AskUserQuestion` for the rest, in one call:
 
 Defaults for anything not asked: `wildcards` 2 (at most `items` - 1),
 `voice` "en-US-AndrewMultilingualNeural", `tone` "conversational, like a smart friend
-catching you up", `newsletter_senders` [], `alerts.ntfy_topic` "", `dropbox` false.
+catching you up", `sources.outlook` false (if not asked), `newsletter_senders` [], `alerts.ntfy_topic` "", `dropbox` false.
 `timezone` is an IANA name (e.g. "America/New_York"); `timezone_label` is its short label
 ("ET", "CT", "MT", "PT", or the usual abbreviation elsewhere). `time` is "HH:MM", 24-hour.
 
@@ -55,7 +57,9 @@ Tell them in a few lines what you are about to create, and wait for a yes:
 - A daily Routine at <time> <timezone_label> that clones KIT and follows its
   `RUNBOOK.md`, runs on their own Claude usage, and sends a push notification when done.
   Whatever is on KIT's main branch at run time is what runs.
-- If they picked newsletters: the Routine reads their Gmail newsletters (read only).
+- If they picked Gmail or Outlook newsletters: the Routine reads newsletters in that
+  mailbox (read only). For Outlook it skips internal and personal mail and uses only
+  newsletters from outside senders.
 
 Then run `curl -s -o /dev/null -w '%{http_code}' https://speech.platform.bing.com/ ; echo;
 curl -s -o /dev/null -w '%{http_code}' https://news.google.com/rss ; echo`.
@@ -81,9 +85,12 @@ Use `create_trigger` (Claude Code Remote tools; load with ToolSearch if deferred
 - `notifications`: `{"push": true}`
 - `cron_expression`: `CRON_TZ=<timezone> <MM> <HH> * * *`, where HH:MM is 8 minutes
   before the profile's `time` (so the brief is ready on time).
-- `connectors`: `["Gmail"]` if `sources.newsletters` is true. If the call refuses
-  connectors, create it without them and tell them in step 9 to attach Gmail to the
-  Routine in claude.ai (Claude Code, Routines, their digest Routine, Connectors).
+- `connectors`: include `"Gmail"` if `sources.newsletters` is true and
+  `"Microsoft 365"` if `sources.outlook` is true; leave it out if neither. If the call
+  refuses a connector (often because they haven't connected it in claude.ai Settings,
+  Connectors), create the Routine without it and tell them in step 9 to connect it and
+  then attach it to the Routine in claude.ai (Claude Code, Routines, their digest
+  Routine, Connectors).
 - `environment_id`: leave it out in a claude.ai/code session. Outside one (for example
   the desktop app or a local terminal), call `list_environments` and use their default
   cloud environment; ask only if there are several and none is clearly the default.
@@ -115,7 +122,7 @@ Add `page_url` and `trigger_id` to the profile, then `ArtifactData` action `set`
 
 ## 9. Tell them, briefly
 - Their page link (PAGE_URL), and that the first brief appears there in about 5 minutes.
-- Any fixes from steps 3 and 5 they need to do (network access, attaching Gmail).
+- Any fixes from steps 3 and 5 they need to do (network access, attaching Gmail or Microsoft 365).
 - How to use it: press play (each word lights up as it is read), vote "More like this" /
   "Less like this" to teach it, "New brief now" for an extra one (allow the permission
   the first time), and "All briefs" for past days.
