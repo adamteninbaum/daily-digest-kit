@@ -1,0 +1,16 @@
+{
+  "name": "daily-digest-kit",
+  "owner": {
+    "name": "Adam Teninbaum"
+  },
+  "metadata": {
+    "description": "The Daily Digest plugin: a personal daily audio news brief."
+  },
+  "plugins": [
+    {
+      "name": "daily-digest",
+      "source": "./",
+      "description": "Your own daily audio news brief. Run /daily-digest:setup to get yours."
+    }
+  ]
+}
