@@ -118,6 +118,8 @@ code { font-family: var(--font-mono); font-size: 0.85em; background: var(--accen
             <span>Newsletters in my Gmail<small>Reads the newsletters you already get. Needs your Gmail connected to Claude.</small></span></label>
           <label class="toggle"><input type="checkbox" id="src-ol">
             <span>Newsletters in my Outlook<small>Same, for your Outlook or work email. Only outside newsletters are read, never internal mail. Needs Microsoft 365 connected to Claude.</small></span></label>
+          <label class="toggle" id="fwd-wrap" hidden><input type="checkbox" id="src-fwd" checked>
+            <span>Include newsletters forwarded to me<small>If someone forwards you a newsletter or article roundup, it goes in too.</small></span></label>
           <label class="field" id="senders-wrap" hidden>Newsletter senders (optional, one per line; leave empty and it finds them for you)
             <textarea id="senders" placeholder="dan@tldrnewsletter.com&#10;newsletter@morningbrew.com"></textarea>
           </label>

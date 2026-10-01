@@ -61,7 +61,14 @@ Do 2a, 2b or both, then 2c.
 - Read kept issues with `read_resource` on each email's `mail:///messages/...` URI.
 
 ### 2c. For all newsletters
-- Drop anything older than the exact window start. Dedupe by subject line.
+- Forwarded newsletters (unless `sources.include_forwarded` is false): also search
+  `after:<window start YYYY/MM/DD> (subject:Fwd OR subject:Fw OR "Forwarded message" OR
+  "Begin forwarded message") -in:sent`. Keep the ones whose forwarded content is a
+  newsletter or article digest (not a personal thread or a work request), and treat
+  the ORIGINAL newsletter inside as the source (name it, e.g. "Morning Brew, forwarded
+  by Jamie"). Their links work like any newsletter's.
+- Drop anything older than the exact window start. Dedupe by subject line (ignore a
+  leading "Fwd:"/"Fw:"), so a forward of an issue you already have is not counted twice.
 - Read EVERY kept issue in full; no sampling. Ignore sponsor blocks, job
   boards, referral and unsubscribe links.
 

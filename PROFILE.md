@@ -14,7 +14,8 @@ and copied into their Routine prompt as a backup. The intake form writes this fo
     "web": true,
     "newsletters": true,
     "outlook": false,
-    "newsletter_senders": ["dan@tldrnewsletter.com"]
+    "newsletter_senders": ["dan@tldrnewsletter.com"],
+    "include_forwarded": true
   },
   "items": 6,
   "wildcards": 2,
