@@ -42,3 +42,16 @@ To try the plugin before it is in a marketplace:
 
 Everything runs on free services: Edge TTS for the voice and public news feeds. Your
 brief runs on your own Claude usage.
+
+## Daily Digest Lite (the 20-second version)
+
+`lite/` is a no-setup version for sharing. A friend opens one link, picks topics and taps
+**Make my brief**. Their own Claude (on their own plan, via the page's `sample` capability)
+picks stories from a shared headline pool and writes the script; their browser reads it aloud
+with word highlighting. Preferences, briefs and votes stay in their browser.
+
+- `lite/build_pool.py OUT.json` builds the headline pool (Google News per topic, Hacker News,
+  Techmeme, Hugging Face papers). A small Routine on the owner's account runs it a few times a
+  day and republishes `lite/index.html` with `pool.json` to the Lite page.
+- Tradeoffs vs the full kit: no newsletters, no phone alerts, no schedule (tap to make one),
+  device voice instead of Edge TTS, and stories are summarized from headlines.
