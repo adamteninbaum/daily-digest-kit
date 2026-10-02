@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AI Digest</title>
+<meta name="apple-mobile-web-app-title" content="AI Digest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<meta name="theme-color" content="#0b1424">
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #0b1424; color: #e6ecf5;
+         font: 17px/1.5 -apple-system, system-ui, sans-serif; padding: 24px 16px; box-sizing: border-box; text-align: center; }
+  img { width: 120px; height: 120px; border-radius: 27px; }
+  ol { text-align: left; max-width: 22rem; margin: 16px auto; padding-left: 1.2em; }
+  a { color: #f2a65a; }
+  [hidden] { display: none !important; }
+</style>
+<script>
+  // Home screen launcher for the AI Audio Digest page (Safari needs a page it can read the icon from).
+  var TARGET = "https://claude.ai/artifact/F5KSHeyUzh53AbRktU8ozy";
+  if (location.search.indexOf("setup") === -1) {
+    location.replace(TARGET);
+  } else {
+    // Drop "?setup" so the saved home screen link is the plain URL, which forwards straight to the digest.
+    history.replaceState(null, "", location.pathname);
+  }
+</script>
+</head>
+<body>
+<main id="setup" hidden>
+  <img src="apple-touch-icon.png" alt="">
+  <h1 style="font-size:1.3rem;margin:12px 0 0">Add AI Digest to your Home Screen</h1>
+  <ol>
+    <li>Tap the Share button in Safari.</li>
+    <li>Tap <b>Add to Home Screen</b>, then <b>Add</b>.</li>
+  </ol>
+  <p>The icon opens your latest brief. <a href="https://claude.ai/artifact/F5KSHeyUzh53AbRktU8ozy">Open it now</a></p>
+</main>
+<script>document.getElementById("setup").hidden = false;</script>
+</body>
+</html>
